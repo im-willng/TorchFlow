@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import ReactFlow, {
     Background,
     Controls,
@@ -9,6 +9,7 @@ import ReactFlow, {
 } from 'react-flow-renderer';
 import NodePalette from './NodePalette';
 import InputNode from './nodes/InputNode';
+import OutputNode from './nodes/OutputNode';
 import LinearNode from './nodes/LinearNode';
 import Conv2DNode from './nodes/Conv2DNode';
 import Conv1DNode from './nodes/Conv1DNode';
@@ -43,6 +44,7 @@ import './NodeEditor.css';
 
 const nodeTypes = {
     input: InputNode,
+    output: OutputNode,
     linear: LinearNode,
     conv1d: Conv1DNode,
     conv2d: Conv2DNode,
@@ -80,11 +82,18 @@ function NodeEditor({ nodes, edges, onNodesChange, onEdgesChange }) {
     const [localNodes, setLocalNodes, onNodesChangeInternal] = useNodesState(nodes);
     const [localEdges, setLocalEdges, onEdgesChangeInternal] = useEdgesState(edges);
 
+    // Sync local state changes to parent
+    useEffect(() => {
+        onNodesChange(localNodes);
+    }, [localNodes]);
+
+    useEffect(() => {
+        onEdgesChange(localEdges);
+    }, [localEdges]);
+
     const onConnect = useCallback((params) => {
-        const newEdges = addEdge(params, localEdges);
-        setLocalEdges(newEdges);
-        onEdgesChange(newEdges);
-    }, [localEdges, setLocalEdges, onEdgesChange]);
+        setLocalEdges((eds) => addEdge(params, eds));
+    }, [setLocalEdges]);
 
     const onNodeDrop = useCallback((nodeType, position) => {
         const newNode = {
@@ -97,20 +106,16 @@ function NodeEditor({ nodes, edges, onNodesChange, onEdgesChange }) {
             }
         };
 
-        const newNodes = [...localNodes, newNode];
-        setLocalNodes(newNodes);
-        onNodesChange(newNodes);
-    }, [localNodes, setLocalNodes, onNodesChange]);
+        setLocalNodes((nds) => [...nds, newNode]);
+    }, [setLocalNodes]);
 
-    const handleNodesChange = useCallback((changes) => {
-        onNodesChangeInternal(changes);
-        onNodesChange(localNodes);
-    }, [onNodesChangeInternal, localNodes, onNodesChange]);
+    const onNodesDelete = useCallback((nodesToDelete) => {
+        setLocalNodes((nds) => nds.filter(node => !nodesToDelete.find(n => n.id === node.id)));
+    }, [setLocalNodes]);
 
-    const handleEdgesChange = useCallback((changes) => {
-        onEdgesChangeInternal(changes);
-        onEdgesChange(localEdges);
-    }, [onEdgesChangeInternal, localEdges, onEdgesChange]);
+    const onEdgesDelete = useCallback((edgesToDelete) => {
+        setLocalEdges((eds) => eds.filter(edge => !edgesToDelete.find(e => e.id === edge.id)));
+    }, [setLocalEdges]);
 
     return (
         <div className="node-editor">
@@ -118,8 +123,10 @@ function NodeEditor({ nodes, edges, onNodesChange, onEdgesChange }) {
             <ReactFlow
                 nodes={localNodes}
                 edges={localEdges}
-                onNodesChange={handleNodesChange}
-                onEdgesChange={handleEdgesChange}
+                onNodesChange={onNodesChangeInternal}
+                onEdgesChange={onEdgesChangeInternal}
+                onNodesDelete={onNodesDelete}
+                onEdgesDelete={onEdgesDelete}
                 onConnect={onConnect}
                 nodeTypes={nodeTypes}
                 fitView
@@ -139,6 +146,8 @@ function getDefaultParams(nodeType) {
     switch (nodeType) {
         case 'input':
             return { shape: [1, 28, 28] };
+        case 'output':
+            return { outputType: 'classification', numClasses: 10 };
         case 'linear':
             return { in_features: 784, out_features: 128 };
         case 'conv1d':

@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function ConvTranspose2DNode({ data }) {
+function ConvTranspose2DNode({ data, id }) {
     const [params, setParams] = useState({
         in_channels: data.params.in_channels || 32,
         out_channels: data.params.out_channels || 16,
@@ -19,6 +20,7 @@ function ConvTranspose2DNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">🔳 TRANSPOSE CONV2D</div>

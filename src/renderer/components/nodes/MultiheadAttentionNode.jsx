@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function MultiheadAttentionNode({ data }) {
+function MultiheadAttentionNode({ data, id }) {
     const [params, setParams] = useState({
         embed_dim: data.params.embed_dim || 512,
         num_heads: data.params.num_heads || 8
@@ -16,6 +17,7 @@ function MultiheadAttentionNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} id="query" style={{ top: '25%' }} />
             <Handle type="target" position={Position.Left} id="key" style={{ top: '50%' }} />
             <Handle type="target" position={Position.Left} id="value" style={{ top: '75%' }} />

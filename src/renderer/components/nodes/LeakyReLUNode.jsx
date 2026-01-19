@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function LeakyReLUNode({ data }) {
+function LeakyReLUNode({ data, id }) {
     const [params, setParams] = useState({
         negative_slope: data.params.negative_slope || 0.01
     });
@@ -14,6 +15,7 @@ function LeakyReLUNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">⚡ LEAKY RELU</div>

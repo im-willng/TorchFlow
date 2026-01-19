@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function DropoutNode({ data }) {
+function DropoutNode({ data, id }) {
     const [p, setP] = useState(data.params.p || 0.5);
 
     const handleChange = (value) => {
@@ -12,6 +13,7 @@ function DropoutNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">💧 DROPOUT</div>

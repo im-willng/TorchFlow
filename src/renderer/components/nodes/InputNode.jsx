@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function InputNode({ data }) {
+function InputNode({ data, id }) {
     const [shape, setShape] = useState(data.params.shape || [1, 28, 28]);
 
     const handleShapeChange = (index, value) => {
@@ -13,6 +14,7 @@ function InputNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <div className="node-title">📥 INPUT</div>
 
             <div className="node-param">

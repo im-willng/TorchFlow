@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function InstanceNormNode({ data }) {
+function InstanceNormNode({ data, id }) {
     const [params, setParams] = useState({
         num_features: data.params.num_features || 128
     });
@@ -14,6 +15,7 @@ function InstanceNormNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">📍 INSTANCENORM</div>

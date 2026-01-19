@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function ReshapeNode({ data }) {
+function ReshapeNode({ data, id }) {
     const [params, setParams] = useState({
         target_shape: data.params.target_shape || '-1, 784'
     });
@@ -13,6 +14,7 @@ function ReshapeNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">🔄 RESHAPE</div>

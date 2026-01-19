@@ -6,6 +6,7 @@ const NODE_CATEGORIES = [
         category: 'Input/Output',
         nodes: [
             { type: 'input', label: 'Input', icon: '📥' },
+            { type: 'output', label: 'Output', icon: '📤' },
         ]
     },
     {

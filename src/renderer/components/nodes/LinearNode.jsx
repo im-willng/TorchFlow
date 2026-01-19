@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function LinearNode({ data }) {
+function LinearNode({ data, id }) {
     const [inFeatures, setInFeatures] = useState(data.params.in_features || 784);
     const [outFeatures, setOutFeatures] = useState(data.params.out_features || 128);
 
@@ -20,7 +21,7 @@ function LinearNode({ data }) {
     return (
         <div className="node-content">
             <Handle type="target" position={Position.Left} />
-
+            <DeleteButton nodeId={id} />
             <div className="node-title">➡️ LINEAR</div>
 
             <div className="node-param">

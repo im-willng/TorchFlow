@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function Conv3DNode({ data }) {
+function Conv3DNode({ data, id }) {
     const [params, setParams] = useState({
         in_channels: data.params.in_channels || 1,
         out_channels: data.params.out_channels || 32,
@@ -19,6 +20,7 @@ function Conv3DNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">🧊 CONV3D</div>

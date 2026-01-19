@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function LayerNormNode({ data }) {
+function LayerNormNode({ data, id }) {
     const [params, setParams] = useState({
         normalized_shape: data.params.normalized_shape || 128
     });
@@ -14,6 +15,7 @@ function LayerNormNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">📏 LAYERNORM</div>

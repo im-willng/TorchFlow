@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function EmbeddingNode({ data }) {
+function EmbeddingNode({ data, id }) {
     const [params, setParams] = useState({
         num_embeddings: data.params.num_embeddings || 10000,
         embedding_dim: data.params.embedding_dim || 128
@@ -16,6 +17,7 @@ function EmbeddingNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">📚 EMBEDDING</div>

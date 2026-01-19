@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function NormNode({ data }) {
+function NormNode({ data, id }) {
     const [numFeatures, setNumFeatures] = useState(data.params.num_features || 128);
 
     const handleChange = (value) => {
@@ -12,6 +13,7 @@ function NormNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">📊 BATCHNORM</div>

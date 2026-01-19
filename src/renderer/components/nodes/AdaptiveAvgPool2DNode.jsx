@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function AdaptiveAvgPool2DNode({ data }) {
+function AdaptiveAvgPool2DNode({ data, id }) {
     const [params, setParams] = useState({
         output_size: data.params.output_size || 1
     });
@@ -14,6 +15,7 @@ function AdaptiveAvgPool2DNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">🎯 ADAPTIVE AVGPOOL</div>

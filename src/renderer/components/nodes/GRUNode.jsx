@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function GRUNode({ data }) {
+function GRUNode({ data, id }) {
     const [params, setParams] = useState({
         input_size: data.params.input_size || 128,
         hidden_size: data.params.hidden_size || 256,
@@ -23,6 +24,7 @@ function GRUNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">🔁 GRU</div>

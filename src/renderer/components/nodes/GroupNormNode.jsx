@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function GroupNormNode({ data }) {
+function GroupNormNode({ data, id }) {
     const [params, setParams] = useState({
         num_groups: data.params.num_groups || 32,
         num_channels: data.params.num_channels || 128
@@ -16,6 +17,7 @@ function GroupNormNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">📐 GROUPNORM</div>

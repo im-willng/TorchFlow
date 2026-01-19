@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function ELUNode({ data }) {
+function ELUNode({ data, id }) {
     const [params, setParams] = useState({
         alpha: data.params.alpha || 1.0
     });
@@ -14,6 +15,7 @@ function ELUNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">💫 ELU</div>

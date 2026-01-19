@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Handle, Position } from 'react-flow-renderer';
+import { DeleteButton } from './DeleteButton';
 
-function MaxPool2DNode({ data }) {
+function MaxPool2DNode({ data, id }) {
     const [params, setParams] = useState({
         kernel_size: data.params.kernel_size || 2,
         stride: data.params.stride || 2,
@@ -17,6 +18,7 @@ function MaxPool2DNode({ data }) {
 
     return (
         <div className="node-content">
+            <DeleteButton nodeId={id} />
             <Handle type="target" position={Position.Left} />
 
             <div className="node-title">⬇️ MAXPOOL2D</div>
