@@ -9,8 +9,7 @@ import torch.optim as optim
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 from typing import Dict, Any, Callable, Optional
-import tempfile
-import os
+from model_builder import ModelBuilder
 
 
 class TrainingEngine:
@@ -21,7 +20,7 @@ class TrainingEngine:
         
     def train(
         self,
-        code: str,
+        graph_data: Dict[str, Any],
         config: Dict[str, Any],
         on_epoch_end: Optional[Callable] = None,
         on_batch_end: Optional[Callable] = None
@@ -30,7 +29,7 @@ class TrainingEngine:
         Train model with given configuration
         
         Args:
-            code: Generated PyTorch model code
+            graph_data: Graph data structure
             config: Training configuration
             on_epoch_end: Callback(epoch, loss, accuracy)
             on_batch_end: Callback(batch, total_batches, loss)
@@ -38,8 +37,9 @@ class TrainingEngine:
         Returns:
             (model, final_loss, final_accuracy)
         """
-        # Load model from generated code
-        model = self._load_model_from_code(code)
+        # Build model from graph data
+        builder = ModelBuilder()
+        model = builder.build_model(graph_data)
         model = model.to(self.device)
         
         # Setup optimizer
@@ -88,18 +88,6 @@ class TrainingEngine:
         
         self.model = model
         return model, final_loss, final_accuracy
-    
-    def _load_model_from_code(self, code: str):
-        """Dynamically load model from generated code"""
-        # Create temporary module
-        namespace = {}
-        exec(code, namespace)
-        
-        # Instantiate model
-        Model = namespace['Model']
-        model = Model()
-        
-        return model
     
     def _load_mnist_data(self, batch_size: int = 64):
         """Load MNIST dataset"""

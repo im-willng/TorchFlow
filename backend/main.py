@@ -7,9 +7,9 @@ import sys
 import json
 import traceback
 from graph_parser import GraphParser
-from code_generator import CodeGenerator
 from training_engine import TrainingEngine
 from model_exporter import ModelExporter
+from system_info import get_system_info
 
 
 def send_event(event_type, data):
@@ -44,26 +44,14 @@ def handle_validate(graph_data):
         })
 
 
-def handle_generate_code(graph_data):
-    """Generate PyTorch code from graph"""
+def handle_get_system_info():
+    """Get system hardware configuration"""
     try:
-        parser = GraphParser()
-        validation = parser.validate(graph_data)
-        
-        if not validation['valid']:
-            send_event('error', {'message': 'Invalid graph', 'errors': validation['errors']})
-            return
-        
-        generator = CodeGenerator()
-        code = generator.generate(graph_data)
-        
-        send_event('code_generated', {
-            'code': code,
-            'total_params': validation.get('total_params', 0)
-        })
+        info = get_system_info()
+        send_event('system_info', info)
     except Exception as e:
         send_event('error', {
-            'message': f'Code generation failed: {str(e)}',
+            'message': f'Failed to get system info: {str(e)}',
             'traceback': traceback.format_exc()
         })
 
@@ -71,16 +59,13 @@ def handle_generate_code(graph_data):
 def handle_train(graph_data, config):
     """Train model with given configuration"""
     try:
-        # Validate and generate code
+        # Validate graph
         parser = GraphParser()
         validation = parser.validate(graph_data)
         
         if not validation['valid']:
             send_event('error', {'message': 'Invalid graph', 'errors': validation['errors']})
             return
-        
-        generator = CodeGenerator()
-        code = generator.generate(graph_data)
         
         # Start training
         engine = TrainingEngine()
@@ -106,7 +91,7 @@ def handle_train(graph_data, config):
             })
         
         model, final_loss, final_accuracy = engine.train(
-            code=code,
+            graph_data=graph_data,
             config=config,
             on_epoch_end=on_epoch_end,
             on_batch_end=on_batch_end
@@ -121,7 +106,7 @@ def handle_train(graph_data, config):
         global trained_model
         trained_model = {
             'model': model,
-            'code': code,
+            'graph_data': graph_data,
             'config': config
         }
         
@@ -142,7 +127,7 @@ def handle_export(export_path):
         exporter = ModelExporter()
         files = exporter.export(
             model=trained_model['model'],
-            code=trained_model['code'],
+            graph_data=trained_model['graph_data'],
             config=trained_model['config'],
             path=export_path
         )
@@ -168,8 +153,8 @@ def main():
             
             if cmd_type == 'validate':
                 handle_validate(command.get('graph'))
-            elif cmd_type == 'generate_code':
-                handle_generate_code(command.get('graph'))
+            elif cmd_type == 'get_system_info':
+                handle_get_system_info()
             elif cmd_type == 'train':
                 handle_train(command.get('graph'), command.get('config', {}))
             elif cmd_type == 'export':
