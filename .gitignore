@@ -1,0 +1,26 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Build outputs
+dist/
+build/
+
+# Python
+backend/__pycache__/
+backend/*.pyc
+backend/.pytest_cache/
+backend/venv/
+
+# Generated files
+*.pt
+model.py
+exports/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

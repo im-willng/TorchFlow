@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PyTorch Deep Learning IDE</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            overflow: hidden;
+        }
+
+        #root {
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="root">
+        <div class="loading">Loading PyTorch IDE...</div>
+    </div>
+    <script>
+        // Debug: Check if electronAPI is available
+        console.log('electronAPI available:', typeof window.electronAPI !== 'undefined');
+        console.log('Loading renderer.js...');
+    </script>
+    <script src="../../dist/renderer.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+.training-chart {
+    padding: 15px;
+    background: #252526;
+    border-bottom: 1px solid #3e3e42;
+}
+
+.training-chart h3 {
+    margin: 0 0 15px 0;
+    font-size: 14px;
+    color: #cccccc;
+}
+
+.chart-placeholder {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #1e1e1e;
+    border: 1px solid #3e3e42;
+    border-radius: 4px;
+    color: #858585;
+    font-size: 12px;
+    text-align: center;
+    padding: 20px;
+}

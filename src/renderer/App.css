@@ -1,0 +1,148 @@
+.app {
+    display: flex;
+    height: 100vh;
+    background: #1e1e1e;
+    color: #d4d4d4;
+    overflow: hidden;
+}
+
+.main-content {
+    flex: 1;
+    position: relative;
+    height: 100%;
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.sidebar {
+    width: 400px;
+    background: #252526;
+    border-left: 1px solid #3e3e42;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1), border-left-width 0.3s ease;
+}
+
+.sidebar.closed {
+    width: 0;
+    border-left-width: 0;
+}
+
+.sidebar-toggle {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    z-index: 100;
+    width: 20px;
+    height: 60px;
+    background: #252526;
+    border: 1px solid #3e3e42;
+    border-right: none;
+    border-radius: 8px 0 0 8px;
+    color: #858585;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    padding: 0;
+    outline: none;
+}
+
+.sidebar-toggle:hover {
+    background: #3e3e42;
+    color: #d4d4d4;
+    width: 24px;
+}
+
+.sidebar-toggle svg {
+    transition: transform 0.3s ease;
+}
+
+.sidebar-toggle.closed svg {
+    transform: rotate(180deg);
+}
+
+.logs {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 15px;
+    overflow: hidden;
+    min-height: 0;
+    /* Important for flex scrolling */
+}
+
+.logs h3 {
+    margin: 0 0 10px 0;
+    font-size: 14px;
+    color: #cccccc;
+    flex-shrink: 0;
+}
+
+.log-container {
+    flex: 1;
+    overflow-y: auto;
+    font-family: 'Consolas', 'Monaco', monospace;
+    font-size: 12px;
+    background: #1e1e1e;
+    border: 1px solid #3e3e42;
+    border-radius: 4px;
+    padding: 8px;
+}
+
+.log-entry {
+    padding: 4px 0;
+    border-bottom: 1px solid #2d2d30;
+    word-break: break-all;
+}
+
+.log-entry:last-child {
+    border-bottom: none;
+}
+
+.log-time {
+    color: #858585;
+    margin-right: 8px;
+    font-size: 11px;
+}
+
+.log-message {
+    color: #d4d4d4;
+}
+
+.log-info .log-message {
+    color: #4ec9b0;
+}
+
+.log-success .log-message {
+    color: #6a9955;
+}
+
+.log-warning .log-message {
+    color: #dcdcaa;
+}
+
+.log-error .log-message {
+    color: #f48771;
+}
+
+/* Scrollbar styling */
+.log-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+.log-container::-webkit-scrollbar-track {
+    background: #1e1e1e;
+}
+
+.log-container::-webkit-scrollbar-thumb {
+    background: #424242;
+    border-radius: 4px;
+}
+
+.log-container::-webkit-scrollbar-thumb:hover {
+    background: #4e4e4e;
+}

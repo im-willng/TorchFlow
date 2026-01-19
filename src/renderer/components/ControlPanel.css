@@ -1,0 +1,156 @@
+.control-panel {
+    padding: 20px;
+    background: #252526;
+    border-bottom: 1px solid #3e3e42;
+    transition: all 0.3s ease;
+}
+
+.control-panel.collapsed {
+    padding-bottom: 20px;
+    /* Keep padding for header */
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.control-panel h2 {
+    margin: 0;
+    font-size: 16px;
+    color: #cccccc;
+}
+
+.chevron {
+    transition: transform 0.3s ease;
+    color: #cccccc;
+    opacity: 0.7;
+}
+
+.chevron.expanded {
+    transform: rotate(180deg);
+}
+
+.panel-header:hover .chevron {
+    opacity: 1;
+}
+
+.panel-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease, opacity 0.3s ease, margin-top 0.3s ease;
+    opacity: 0;
+    margin-top: 0;
+}
+
+.panel-content.expanded {
+    max-height: 1000px;
+    /* Large enough to fit content */
+    opacity: 1;
+    margin-top: 20px;
+}
+
+.config-section {
+    margin-bottom: 15px;
+}
+
+.config-section label {
+    display: block;
+    font-size: 12px;
+    color: #858585;
+    margin-bottom: 5px;
+}
+
+.config-section input,
+.config-section select {
+    width: 100%;
+    padding: 8px;
+    background: #1e1e1e;
+    border: 1px solid #3e3e42;
+    border-radius: 4px;
+    color: #d4d4d4;
+    font-size: 13px;
+}
+
+.config-section input:focus,
+.config-section select:focus {
+    outline: none;
+    border-color: #4a90e2;
+}
+
+.config-section input:disabled,
+.config-section select:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.model-info {
+    padding: 12px;
+    background: #1e1e1e;
+    border: 1px solid #3e3e42;
+    border-radius: 4px;
+    margin-bottom: 15px;
+    font-size: 12px;
+    color: #6a9955;
+}
+
+.button-group {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.btn {
+    flex: 1;
+    padding: 10px;
+    border: none;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: #4a90e2;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #357abd;
+}
+
+.btn-secondary {
+    background: #3e3e42;
+    color: #d4d4d4;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #505050;
+}
+
+.btn-success {
+    background: #6a9955;
+    color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+    background: #588a43;
+}
+
+.btn-danger {
+    background: #f48771;
+    color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: #d16b56;
+}
